@@ -4,12 +4,21 @@
 	import { Minus, Plus, Trash2, X } from '@lucide/svelte';
 	import Picture from '#lib/components/Picture.svelte';
 	import { cart, clearCart, removeLine, setQty } from '#lib/cart.svelte.ts';
+	import { couponStore } from '#lib/coupon.svelte.ts';
 	import { inr, site } from '#lib/data/site.ts';
 
 	let { open = $bindable(false) }: { open: boolean } = $props();
 
 	const remaining = $derived(Math.max(0, site.freeDeliveryAbove - cart.subtotal));
 	const progress = $derived(Math.min(100, (cart.subtotal / site.freeDeliveryAbove) * 100));
+	const discount = $derived(couponStore.discount(cart.subtotal));
+	const payable = $derived(Math.max(0, cart.total - discount));
+	const totalSaved = $derived(cart.savings + discount);
+	let couponCode = $state('');
+
+	function applyCoupon() {
+		if (couponCode.trim()) couponStore.apply(couponCode);
+	}
 </script>
 
 {#if open}
@@ -74,9 +83,9 @@
 										type="button"
 										onclick={() => setQty(line.slug, line.qty - 1)}
 										aria-label={`One less ${line.name}`}
-										class="flex h-8 w-8 items-center justify-center rounded-full text-ink"
+										class="flex h-10 w-10 items-center justify-center rounded-full text-ink"
 									>
-										<Minus size={14} aria-hidden="true" />
+										<Minus size={15} aria-hidden="true" />
 									</button>
 									<span class="w-6 text-center text-sm font-bold" aria-label={`${line.qty} of ${line.name}`}
 										>{line.qty}</span
@@ -85,9 +94,9 @@
 										type="button"
 										onclick={() => setQty(line.slug, line.qty + 1)}
 										aria-label={`One more ${line.name}`}
-										class="flex h-8 w-8 items-center justify-center rounded-full text-ink"
+										class="flex h-10 w-10 items-center justify-center rounded-full text-ink"
 									>
-										<Plus size={14} aria-hidden="true" />
+										<Plus size={15} aria-hidden="true" />
 									</button>
 								</div>
 							</div>
@@ -109,16 +118,51 @@
 				<div class="space-y-1 border-t border-line px-5 py-4 text-sm">
 					<p class="flex justify-between"><span class="text-muted">Subtotal</span><span class="font-semibold">{inr(cart.subtotal)}</span></p>
 					{#if cart.savings > 0}
-						<p class="flex justify-between"><span class="text-muted">You save</span><span class="font-semibold text-leaf-dark">− {inr(cart.savings)}</span></p>
+						<p class="flex justify-between"><span class="text-muted">You save on MRP</span><span class="font-semibold text-leaf-dark">− {inr(cart.savings)}</span></p>
+					{/if}
+					{#if discount > 0}
+						<p class="flex justify-between"><span class="text-muted">Coupon {couponStore.applied?.code}</span><span class="font-semibold text-leaf-dark">− {inr(discount)}</span></p>
 					{/if}
 					<p class="flex justify-between">
 						<span class="text-muted">Delivery</span><span class="font-semibold"
 							>{cart.deliveryFee === 0 ? 'Free' : inr(cart.deliveryFee)}</span
 						>
 					</p>
+					{#if totalSaved > 0}
+						<p class="flex justify-between rounded-xl bg-leaf-pale px-3 py-2 font-bold text-leaf-dark">You saved {inr(totalSaved)} on this order</p>
+					{/if}
 					<p class="flex justify-between border-t border-line pt-2 text-base font-black text-ink">
-						<span>Total</span><span>{inr(cart.total)}</span>
+						<span>Total</span><span>{inr(payable)}</span>
 					</p>
+					{#if couponStore.applied}
+						<p class="flex items-center justify-between rounded-2xl bg-leaf-pale px-4 py-2.5 text-sm font-bold text-leaf-dark">
+							<span>✓ {couponStore.applied.code} applied</span>
+							<button type="button" onclick={() => couponStore.clear()} class="text-muted underline">Remove</button>
+						</p>
+					{:else}
+						<form
+							onsubmit={(e) => {
+								e.preventDefault();
+								applyCoupon();
+							}}
+							class="flex gap-2 pt-1"
+						>
+							<label class="sr-only" for="drawer-coupon">Coupon code</label>
+							<input
+								id="drawer-coupon"
+								type="text"
+								bind:value={couponCode}
+								placeholder="Coupon code"
+								class="min-w-0 flex-1 rounded-full border border-line bg-white px-4 py-2.5 text-sm font-bold uppercase outline-none placeholder:normal-case focus:border-leaf"
+							/>
+							<button type="submit" class="shrink-0 rounded-full bg-ink px-4 py-2.5 text-sm font-bold text-white">Apply</button>
+						</form>
+						{#if couponStore.error}
+							<p role="alert" class="text-xs font-semibold text-red-600">{couponStore.error}</p>
+						{:else}
+							<p class="text-xs text-muted">Try WELCOME10, FRESH20 or FLAT50</p>
+						{/if}
+					{/if}
 					<div class="flex gap-3 pt-3">
 						<button
 							type="button"
@@ -132,7 +176,7 @@
 							onclick={() => (open = false)}
 							class="flex min-h-12 flex-1 items-center justify-center rounded-full bg-leaf text-sm font-bold text-white"
 						>
-							Checkout · {inr(cart.total)}
+							Checkout · {inr(payable)}
 						</a>
 					</div>
 				</div>

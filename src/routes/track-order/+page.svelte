@@ -3,24 +3,28 @@
 	import PageHero from '#lib/components/PageHero.svelte';
 
 	let orderId = $state('');
+	let phone = $state('');
 	let lookedUp = $state(false);
 	let error = $state('');
 
 	// searchParams are unavailable during prerender — read them only in the
 	// browser ($effect never runs on the server).
 	$effect(() => {
-		const o = page.url.searchParams.get('order');
+		const o = page.url.searchParams.get('order') ?? page.url.searchParams.get('id');
 		if (o) {
 			orderId = o;
 			lookedUp = true;
 		}
 	});
 
+	// 5-step live tracker (research P0-4): Confirmed → Packed → Picked up →
+	// Out for delivery → Delivered, with rider + ETA + substitution notice.
 	const steps = [
-		{ label: 'Order placed', time: 'Just now', done: true },
-		{ label: 'Packed', time: '5 mins later', done: true },
-		{ label: 'Out for delivery', time: 'On the way', done: false, active: true },
-		{ label: 'Delivered', time: 'ETA 30–45 mins', done: false }
+		{ label: 'Order confirmed', time: '7:02 pm', done: true },
+		{ label: 'Packed', time: '7:08 pm · all items quality-checked', done: true },
+		{ label: 'Picked up', time: '7:14 pm · rider Arjun (★★ 4.9)', done: true },
+		{ label: 'Out for delivery', time: 'On the way — arriving in ~12 mins', done: false, active: true },
+		{ label: 'Delivered', time: 'ETA 7:35 pm', done: false }
 	];
 
 	function track(e: SubmitEvent) {
@@ -57,6 +61,16 @@
 				placeholder="GB-248136"
 				class="min-h-12 min-w-0 flex-1 rounded-full border border-line bg-leaf-pale/50 px-5 text-base font-semibold outline-none placeholder:text-muted focus:border-leaf focus:bg-white"
 			/>
+			<label class="sr-only" for="phone">Phone number (optional, for guest tracking)</label>
+			<input
+				id="phone"
+				type="tel"
+				bind:value={phone}
+				placeholder="Phone (optional)"
+				autocomplete="tel"
+				inputmode="tel"
+				class="min-h-12 min-w-0 flex-1 rounded-full border border-line bg-leaf-pale/50 px-5 text-base font-semibold outline-none placeholder:text-muted focus:border-leaf focus:bg-white"
+			/>
 			<button type="submit" class="flex min-h-12 items-center justify-center rounded-full bg-leaf px-8 text-sm font-bold text-white transition-colors hover:bg-leaf-dark">
 				Track order
 			</button>
@@ -89,8 +103,15 @@
 					{/each}
 				</ol>
 				<p class="mt-6 border-t border-line pt-4 text-sm leading-relaxed text-muted">
-					Your rider is on the way with your order. Keep your phone handy — they will call if they cannot find your building.
+					Your rider is Arjun (★★ 4.9) on a green EV scooter. Keep your phone handy — he will call if he cannot find your building.
 				</p>
+				<p class="mt-3 rounded-2xl bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800">
+					Substitution notice: Farm Eggs (6 pcs) was replaced with Farm Eggs (12 pcs) at the same per-egg price — approve it here or we refund the difference.
+				</p>
+				<div class="mt-4 flex flex-wrap gap-2">
+					<a href="/help" class="rounded-full border border-line bg-white px-5 py-2.5 text-sm font-bold text-ink">Need help with this order?</a>
+					<a href="/account/orders" class="rounded-full border border-line bg-white px-5 py-2.5 text-sm font-bold text-ink">All my orders</a>
+				</div>
 			</div>
 		{/if}
 	</div>

@@ -5,7 +5,7 @@
 	import Picture from '#lib/components/Picture.svelte';
 	import ProductCard from '#lib/components/ProductCard.svelte';
 	import Testimonials from '#lib/components/Testimonials.svelte';
-	import { articles, bestsellers, categories, deals, site, whyChoose } from '#lib/data/site.ts';
+	import { articles, bestsellers, categories, deals, recipes, site, whyChoose } from '#lib/data/site.ts';
 
 	const whyIcons = { truck: Truck, leaf: Leaf, tag: Tag, refresh: RefreshCcw, headset: Headphones } as const;
 
@@ -91,6 +91,42 @@
 		</div>
 	</section>
 
+	<!-- Cook tonight / recipes -->
+	<section class="bg-white pb-12 sm:pb-16" aria-labelledby="recipes-title">
+		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+			<div class="reveal flex flex-wrap items-end justify-between gap-4">
+				<h2 id="recipes-title" class="font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">Cook Tonight</h2>
+				<a href="/recipes" class="font-bold text-leaf-dark underline underline-offset-4">All Recipes →</a>
+			</div>
+			<p class="reveal mt-2 text-muted">Shoppable recipes — add every ingredient to your cart in one tap.</p>
+			<div class="mt-8 grid gap-5 md:grid-cols-3">
+				{#each recipes as recipe}
+					<article class="group overflow-hidden rounded-3xl border border-line bg-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+						<a href={`/recipes/${recipe.slug}`} aria-label={recipe.title}>
+							<Picture
+								name={recipe.image}
+								alt={recipe.title}
+								width={800}
+								height={533}
+								sizes="(max-width: 768px) 100vw, 33vw"
+								imgClass="aspect-[3/2] w-full object-cover transition-transform duration-300 group-hover:scale-105"
+							/>
+						</a>
+						<div class="p-5">
+							<p class="text-xs font-bold text-muted">{recipe.time} · Serves {recipe.servings} · Veg</p>
+							<h3 class="mt-2 font-display text-lg leading-snug font-bold text-ink">
+								<a href={`/recipes/${recipe.slug}`} class="transition-colors hover:text-leaf-dark">{recipe.title}</a>
+							</h3>
+							<a href={`/recipes/${recipe.slug}`} class="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-leaf-dark">
+								Shop ingredients <ArrowRight size={15} aria-hidden="true" />
+							</a>
+						</div>
+					</article>
+				{/each}
+			</div>
+		</div>
+	</section>
+
 	<!-- Healthy living / blog -->
 	<section class="bg-leaf-pale py-12 sm:py-16" aria-labelledby="blog-title">
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -149,6 +185,25 @@
 	</section>
 
 	<Testimonials />
+
+	<!-- GreenBasket Pass banner -->
+	<section class="bg-white pb-12 sm:pb-16" aria-label="GreenBasket Pass">
+		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+			<div class="reveal relative overflow-hidden rounded-[2rem] bg-leaf-deep px-6 py-10 text-white sm:px-12 sm:py-12">
+				<div class="pointer-events-none absolute -top-10 -right-10 h-48 w-48 rounded-full bg-white/10" aria-hidden="true"></div>
+				<div class="relative flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
+					<div class="max-w-xl">
+						<h2 class="font-display text-3xl font-extrabold sm:text-4xl">GreenBasket Pass — ₹99/month</h2>
+						<p class="mt-2 leading-relaxed text-white/85">Free delivery on every order, extra 5% off fruits & vegetables, priority slots in peak hours. Try the savings calculator and see what you'd save.</p>
+					</div>
+					<div class="flex flex-wrap gap-3">
+						<a href="/membership" class="flex min-h-12 items-center rounded-full bg-white px-7 text-sm font-bold text-leaf-deep">See Pass benefits</a>
+						<a href="/subscriptions" class="flex min-h-12 items-center rounded-full border-2 border-white/70 px-7 text-sm font-bold text-white">Daily subscriptions</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
 	<!-- Newsletter -->
 	<section class="bg-white pb-16 sm:pb-20" aria-labelledby="newsletter-title">

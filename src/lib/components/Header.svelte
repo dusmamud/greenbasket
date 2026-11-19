@@ -13,7 +13,7 @@
 		e.preventDefault();
 		const term = q.trim();
 		open = false;
-		goto(term ? `/shop?search=${encodeURIComponent(term)}` : '/shop');
+		goto(term ? `/search?q=${encodeURIComponent(term)}` : '/search');
 	}
 </script>
 
@@ -70,13 +70,14 @@
 				<Tag size={18} class="text-leaf-dark" aria-hidden="true" /> Offers
 			</a>
 			<a
-				href="/contact"
+				href="/account"
 				class="hidden items-center gap-1.5 rounded-full px-3 py-2 text-sm font-bold text-ink transition-colors hover:bg-leaf-pale md:flex"
 			>
 				<User size={18} class="text-leaf-dark" aria-hidden="true" /> Account
 			</a>
 			<button
 				type="button"
+				data-cart-target="desktop"
 				onclick={() => (drawer.open = true)}
 				class="relative flex h-11 items-center gap-2 rounded-full px-3 py-2 text-sm font-bold text-ink transition-colors hover:bg-leaf-pale"
 				aria-label={`Your cart, ${cart.count} item${cart.count === 1 ? '' : 's'}, total ₹${cart.total}`}

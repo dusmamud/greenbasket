@@ -149,3 +149,301 @@ export const navLinks = [
 	{ label: 'Household', href: '/shop?category=household' },
 	{ label: 'Offers', href: '/offers' }
 ];
+
+// --- Trust / compliance (mock) ---
+export const fssaiLicence = '11523998001234'; // mock licence number for design review
+
+// --- Per-unit price (₹/kg, ₹/100g…) shown on every card ---
+const perUnitMap: Record<string, string> = {
+	'red-apples': '₹149/kg',
+	banana: '₹59/dozen',
+	'fresh-milk': '₹64/L',
+	'whole-wheat-atta': '₹58/kg',
+	'iodised-salt': '₹28/kg',
+	'dark-chocolate': '₹149/100 g',
+	tomatoes: '₹39/kg',
+	onions: '₹49/kg',
+	oranges: '₹119/kg',
+	'whole-wheat-bread': '₹16/100 g',
+	'farm-eggs': '₹15/pc',
+	'fresh-curd': '₹14/100 g',
+	spinach: '₹29/bunch',
+	'basmati-rice': '₹189/kg',
+	'rolled-oats': '₹149/kg',
+	'pure-honey': '₹50/100 g'
+};
+export const perUnit = (slug: string) => perUnitMap[slug] ?? '';
+
+// --- Search synonyms (Hinglish / typos) -> product slugs ---
+export const searchSynonyms: Record<string, string[]> = {
+	doodh: ['fresh-milk'],
+	dudh: ['fresh-milk'],
+	milk: ['fresh-milk'],
+	atta: ['whole-wheat-atta'],
+	flour: ['whole-wheat-atta', 'basmati-rice'],
+	chawal: ['basmati-rice'],
+	rice: ['basmati-rice'],
+	namak: ['iodised-salt'],
+	salt: ['iodised-salt'],
+	seb: ['red-apples'],
+	apple: ['red-apples'],
+	kela: ['banana'],
+	banana: ['banana'],
+	tamatar: ['tomatoes'],
+	tomato: ['tomatoes'],
+	pyaaz: ['onions'],
+	onion: ['onions'],
+	santra: ['oranges'],
+	orange: ['oranges'],
+	anda: ['farm-eggs'],
+	egg: ['farm-eggs'],
+	dahi: ['fresh-curd'],
+	curd: ['fresh-curd'],
+	palak: ['spinach'],
+	spinach: ['spinach'],
+	shahad: ['pure-honey'],
+	honey: ['pure-honey'],
+	bread: ['whole-wheat-bread'],
+	oats: ['rolled-oats'],
+	chocolate: ['dark-chocolate']
+};
+
+// --- Recipes (shoppable) ---
+export type Recipe = {
+	slug: string;
+	title: string;
+	time: string;
+	servings: number;
+	veg: boolean;
+	image: string;
+	excerpt: string;
+	ingredients: { slug: string; qty: string }[];
+	steps: string[];
+};
+
+export const recipes: Recipe[] = [
+	{
+		slug: 'banana-honey-overnight-oats',
+		title: 'Banana Honey Overnight Oats',
+		time: '10 mins + overnight',
+		servings: 2,
+		veg: true,
+		image: 'recipe-overnight-oats',
+		excerpt: 'Creamy oats soaked overnight with banana and honey — breakfast ready before you wake up.',
+		ingredients: [
+			{ slug: 'rolled-oats', qty: '1 cup' },
+			{ slug: 'fresh-milk', qty: '1 cup' },
+			{ slug: 'banana', qty: '1, sliced' },
+			{ slug: 'pure-honey', qty: '2 tbsp' },
+			{ slug: 'fresh-curd', qty: '2 tbsp' }
+		],
+		steps: [
+			'Stir oats, milk, curd and honey in a jar.',
+			'Layer in banana slices and close the lid.',
+			'Refrigerate overnight (at least 6 hours).',
+			'Top with extra banana and honey, serve chilled.'
+		]
+	},
+	{
+		slug: 'veg-biryani',
+		title: 'Weeknight Veg Biryani',
+		time: '40 mins',
+		servings: 4,
+		veg: true,
+		image: 'recipe-veg-biryani',
+		excerpt: 'Fragrant basmati layered with tomatoes, onions and spinach — one-pot comfort, zero fuss.',
+		ingredients: [
+			{ slug: 'basmati-rice', qty: '2 cups' },
+			{ slug: 'tomatoes', qty: '2, chopped' },
+			{ slug: 'onions', qty: '2, sliced' },
+			{ slug: 'spinach', qty: '1 bunch' },
+			{ slug: 'iodised-salt', qty: 'to taste' }
+		],
+		steps: [
+			'Soak rice 20 minutes, then drain.',
+			'Fry onions till golden, add tomatoes and spinach.',
+			'Layer rice over the masala with a little water.',
+			'Cover and cook on low 20 minutes. Rest 5, fluff and serve.'
+		]
+	},
+	{
+		slug: 'masala-oats',
+		title: 'Masala Oats Bowl',
+		time: '15 mins',
+		servings: 2,
+		veg: true,
+		image: 'recipe-masala-oats',
+		excerpt: 'Savoury oats with tomato, onion and spinach — a 15-minute breakfast that actually fills you up.',
+		ingredients: [
+			{ slug: 'rolled-oats', qty: '1 cup' },
+			{ slug: 'tomatoes', qty: '1, chopped' },
+			{ slug: 'onions', qty: '1, chopped' },
+			{ slug: 'spinach', qty: '1 handful' },
+			{ slug: 'iodised-salt', qty: 'to taste' }
+		],
+		steps: [
+			'Heat a little oil; soften onions and tomatoes.',
+			'Add spinach till just wilted.',
+			'Stir in oats and 2 cups water, simmer 5 minutes.',
+			'Season, rest 2 minutes and serve hot.'
+		]
+	}
+];
+
+// --- Stores / delivery areas (Mumbai) ---
+export type StoreArea = {
+	slug: string;
+	name: string;
+	pincode: string;
+	eta: string;
+	address: string;
+	hours: string;
+	phone: string;
+};
+
+export const storeAreas: StoreArea[] = [
+	{ slug: 'bandra-west', name: 'Bandra West', pincode: '400050', eta: '30 mins', address: 'Linking Road, Bandra West', hours: '6:00 am – 11:00 pm', phone: '+91 98765 43210' },
+	{ slug: 'andheri-east', name: 'Andheri East', pincode: '400069', eta: '35 mins', address: 'Chakala, Andheri East', hours: '6:00 am – 11:00 pm', phone: '+91 98765 43211' },
+	{ slug: 'powai', name: 'Powai', pincode: '400076', eta: '40 mins', address: 'Hiranandani Gardens, Powai', hours: '6:00 am – 11:00 pm', phone: '+91 98765 43212' },
+	{ slug: 'juhu', name: 'Juhu', pincode: '400049', eta: '30 mins', address: 'Juhu Tara Road, Juhu', hours: '6:00 am – 11:00 pm', phone: '+91 98765 43213' },
+	{ slug: 'dadar', name: 'Dadar', pincode: '400014', eta: '45 mins', address: 'Dadar TT, Dadar East', hours: '6:00 am – 11:00 pm', phone: '+91 98765 43214' },
+	{ slug: 'borivali-west', name: 'Borivali West', pincode: '400092', eta: '50 mins', address: 'SV Road, Borivali West', hours: '6:00 am – 11:00 pm', phone: '+91 98765 43215' }
+];
+
+// --- Subscriptions (daily staples) ---
+export type Subscription = {
+	slug: string;
+	name: string;
+	productSlug: string;
+	price: number;
+	unit: string;
+	schedules: string[];
+	blurb: string;
+};
+
+export const subscriptions: Subscription[] = [
+	{ slug: 'milk-daily', name: 'Fresh Milk — Daily', productSlug: 'fresh-milk', price: 64, unit: '1 L / day', schedules: ['Every day', 'Weekdays only', 'Alternate days'], blurb: 'Chilled toned milk at your door before 7 am, every morning.' },
+	{ slug: 'eggs-weekly', name: 'Farm Eggs — Weekly', productSlug: 'farm-eggs', price: 89, unit: '6 pcs / week', schedules: ['Every Monday', 'Mon & Thu', 'Every day'], blurb: 'Free-range eggs, checked and packed the same morning.' },
+	{ slug: 'bread-daily', name: 'Whole Wheat Bread — Daily', productSlug: 'whole-wheat-bread', price: 65, unit: '400 g / day', schedules: ['Every day', 'Weekdays only'], blurb: 'Baked at 6 am, still warm when it reaches you.' }
+];
+
+// --- Membership (GreenBasket Pass) ---
+export const pass = {
+	name: 'GreenBasket Pass',
+	price: 99,
+	period: 'per month',
+	benefits: [
+		'Free delivery on every order, no minimum',
+		'Extra 5% off on all fruits & vegetables',
+		'Priority delivery slots in peak hours',
+		'Free delivery on subscriptions, always',
+		'Exclusive member-only deals every Friday'
+	]
+};
+
+// --- Coupons (mock codes) ---
+export type Coupon = { code: string; label: string; detail: string; percent: number; maxOff: number; minOrder: number };
+
+export const coupons: Coupon[] = [
+	{ code: 'WELCOME10', label: '10% off your first order', detail: 'Up to ₹100 off · min order ₹299', percent: 10, maxOff: 100, minOrder: 299 },
+	{ code: 'FRESH20', label: '20% off fruits & vegetables', detail: 'Up to ₹150 off · min order ₹499', percent: 20, maxOff: 150, minOrder: 499 },
+	{ code: 'FLAT50', label: 'Flat ₹50 off', detail: 'Min order ₹799 · one use per customer', percent: 0, maxOff: 50, minOrder: 799 }
+];
+
+// --- Mock account ---
+export const mockUser = {
+	name: 'Priya Sharma',
+	email: 'priya.sharma@example.in',
+	phone: '+91 98765 12345',
+	coins: 240,
+	passMember: true,
+	passValidTill: '18 Dec 2026',
+	addresses: [
+		{ id: 'home', label: 'Home', line: '201, Sunrise Apartments, Linking Road, Bandra West, Mumbai 400050', isDefault: true },
+		{ id: 'office', label: 'Office', line: '4th Floor, Trade View, Andheri East, Mumbai 400069', isDefault: false }
+	],
+	payments: [
+		{ id: 'upi', label: 'UPI — priya@okhdfc', detail: 'Google Pay · default', isDefault: true },
+		{ id: 'card', label: 'Visa •••• 4242', detail: 'Expires 08/28', isDefault: false }
+	]
+};
+
+export type MockOrder = {
+	id: string;
+	date: string;
+	items: { slug: string; qty: number }[];
+	subtotal: number;
+	status: 'Delivered' | 'Out for delivery' | 'Packed';
+	eta?: string;
+};
+
+export const mockOrders: MockOrder[] = [
+	{
+		id: 'GB-248136',
+		date: '18 Nov 2026',
+		items: [
+			{ slug: 'fresh-milk', qty: 2 },
+			{ slug: 'red-apples', qty: 1 },
+			{ slug: 'whole-wheat-bread', qty: 1 }
+		],
+		subtotal: 342,
+		status: 'Delivered'
+	},
+	{
+		id: 'GB-248097',
+		date: '16 Nov 2026',
+		items: [
+			{ slug: 'basmati-rice', qty: 1 },
+			{ slug: 'tomatoes', qty: 2 },
+			{ slug: 'onions', qty: 1 },
+			{ slug: 'pure-honey', qty: 1 }
+		],
+		subtotal: 565,
+		status: 'Delivered'
+	},
+	{
+		id: 'GB-248142',
+		date: '19 Nov 2026',
+		items: [
+			{ slug: 'banana', qty: 1 },
+			{ slug: 'farm-eggs', qty: 1 },
+			{ slug: 'rolled-oats', qty: 1 }
+		],
+		subtotal: 297,
+		status: 'Out for delivery',
+		eta: '12 mins'
+	}
+];
+
+// --- Help centre ---
+export type HelpTopic = { slug: string; group: string; title: string; body: string };
+
+export const helpTopics: HelpTopic[] = [
+	{ slug: 'delivery-slots', group: 'Delivery', title: 'Delivery slots & timing', body: 'Most orders arrive in 30–45 minutes. At checkout you can also pick a 2-hour slot today or schedule tomorrow morning, including the 6–8 am fresh slot. Slots are free above ₹499.' },
+	{ slug: 'track-order', group: 'Delivery', title: 'How do I track my order?', body: 'Open Track Order and enter your order ID (for example GB-248136) and phone number. You will see live status from Packed to Delivered, plus your rider’s name and ETA.' },
+	{ slug: 'returns-refunds', group: 'Returns', title: 'Returns & refunds', body: 'Damaged or wrong items? Tell us within 24 hours and we replace or refund — no questions asked. Perishables (milk, vegetables, bread) are refunded, not collected back. Refunds land in your wallet in minutes or your bank in 3–5 days.' },
+	{ slug: 'substitutions', group: 'Orders', title: 'What if an item is out of stock?', body: 'We never silently swap. At checkout choose: allow a similar substitute, refund the item, or call me first. You can approve or reject a substitution from the tracking screen.' },
+	{ slug: 'payments', group: 'Payments', title: 'Payment options', body: 'UPI (Google Pay, PhonePe, Paytm, BHIM), credit/debit cards, netbanking, wallets and cash on delivery. COD carries no extra fee on prepaid-eligible pincodes; a ₹20 handling note applies only where shown at checkout.' },
+	{ slug: 'coupons', group: 'Offers', title: 'Coupons & GreenBasket Pass', body: 'Apply a coupon in the cart — try WELCOME10, FRESH20 or FLAT50. Pass members get free delivery on every order and an extra 5% off fruits & vegetables. Coins earned on every order can be redeemed at checkout.' },
+	{ slug: 'subscriptions', group: 'Subscriptions', title: 'Managing a subscription', body: 'Pause, skip or change quantity from Subscriptions — changes apply from the next delivery. Cancel anytime; you are never charged for paused days.' },
+	{ slug: 'account', group: 'Account', title: 'My account & addresses', body: 'Save up to 5 addresses and 3 payment methods. Your wallet shows coins, refunds and Pass status. This is a demo store, so no real payment is taken.' }
+];
+
+// --- Careers (mock) ---
+export const careers = [
+	{ title: 'Delivery Partner — Bandra West', type: 'Full-time · On-ground', blurb: 'Ride with us, earn per delivery plus weekly incentives. Two-wheeler and smartphone required.' },
+	{ title: 'Dark Store Associate — Powai', type: 'Full-time · Store', blurb: 'Pick, pack and keep the shelves fresh. Morning and evening shifts available.' },
+	{ title: 'Customer Happiness Executive', type: 'Full-time · Remote', blurb: 'Help customers on chat and phone, in Hindi and English. Freshers welcome.' },
+	{ title: 'Category Manager — Fresh Produce', type: 'Full-time · HQ, Mumbai', blurb: 'Own sourcing and quality for fruits & vegetables across Mumbai. 3+ years in fresh retail.' }
+];
+
+// --- Gift cards (mock) ---
+export const giftCardAmounts = [250, 500, 1000, 2000];
+
+// --- Bulk / B2B packs (mock) ---
+export const bulkPacks = [
+	{ name: 'Society Pack — 20 homes', detail: 'Atta 5 kg × 4, Rice 5 kg × 2, Oil 5 L × 2, Salt 1 kg × 5', price: 4999, mrp: 5890 },
+	{ name: 'Café Starter Pack', detail: 'Milk 1 L × 20, Bread 400 g × 10, Eggs 30 pcs, Sugar 5 kg', price: 2999, mrp: 3490 },
+	{ name: 'Office Pantry Pack', detail: 'Tea, coffee, biscuits, milk & snacks for a 30-person office, one month', price: 7999, mrp: 9290 },
+	{ name: 'Restaurant Essentials', detail: 'Onions 25 kg, Tomatoes 20 kg, Rice 25 kg, Atta 25 kg — weekly', price: 6499, mrp: 7490 }
+];

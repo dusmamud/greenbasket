@@ -1,16 +1,25 @@
 <script lang="ts">
-	// Product card: photo, veg mark, rating, price + MRP + % off, add-to-cart
-	// that turns into a qty stepper once the item is in the cart.
-	import { Minus, Plus } from '@lucide/svelte';
+	// Product card: photo, veg mark, rating, price + MRP + % off + ₹/unit,
+	// freshness line, wishlist heart, add-to-cart that turns into a qty
+	// stepper once the item is in the cart (with fly-to-cart feedback).
+	import { Heart, Minus, Plus } from '@lucide/svelte';
 	import Picture from '#lib/components/Picture.svelte';
 	import Stars from '#lib/components/Stars.svelte';
 	import { addProduct, cart, setQty } from '#lib/cart.svelte.ts';
-	import { inr, type Product } from '#lib/data/site.ts';
+	import { wishlist } from '#lib/wishlist.svelte.ts';
+	import { flyToCart } from '#lib/flyToCart.ts';
+	import { inr, perUnit, type Product } from '#lib/data/site.ts';
 
 	let { product }: { product: Product } = $props();
 
 	const inCart = $derived(cart.lines.find((l) => l.slug === product.slug));
 	const off = $derived(Math.round(((product.mrp - product.price) / product.mrp) * 100));
+	const wished = $derived(wishlist.has(product.slug));
+
+	function addFromButton(e: MouseEvent) {
+		addProduct(product.slug);
+		flyToCart(e.currentTarget as HTMLElement);
+	}
 </script>
 
 <article class="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
@@ -29,12 +38,22 @@
 		<span class="absolute top-3 right-3 flex h-6 w-6 items-center justify-center rounded-md border bg-white {product.veg ? 'border-leaf' : 'border-[#a33]'} shadow-sm" title={product.veg ? 'Vegetarian' : 'Non-vegetarian'} aria-label={product.veg ? 'Vegetarian' : 'Non-vegetarian'}>
 			<span class="h-2.5 w-2.5 rounded-full {product.veg ? 'bg-leaf' : 'bg-[#a33]'}"></span>
 		</span>
+		<button
+			type="button"
+			onclick={() => wishlist.toggle(product.slug)}
+			aria-pressed={wished}
+			aria-label={wished ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`}
+			class="absolute right-3 bottom-3 flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-md transition-transform duration-200 hover:scale-110 active:scale-95 {wished ? 'text-red-500' : 'text-muted'}"
+		>
+			<Heart size={19} fill={wished ? 'currentColor' : 'none'} aria-hidden="true" />
+		</button>
 	</a>
 	<div class="flex flex-1 flex-col p-4">
 		<a href={`/shop/${product.slug}`} class="min-w-0">
 			<h3 class="truncate font-display text-base font-bold text-ink transition-colors hover:text-leaf-dark">{product.name}</h3>
 		</a>
 		<p class="mt-0.5 text-xs font-medium text-muted">{product.brand} · {product.unit}</p>
+		<p class="mt-1 text-[0.7rem] font-bold tracking-wide text-leaf-dark uppercase">Packed today · {perUnit(product.slug)}</p>
 		<p class="mt-2 flex items-center gap-1.5">
 			<Stars rating={product.rating} size={13} />
 			<span class="text-xs font-semibold text-muted">{product.rating.toFixed(1)} ({product.reviews})</span>
@@ -58,7 +77,7 @@
 		{:else}
 			<button
 				type="button"
-				onclick={() => addProduct(product.slug)}
+				onclick={addFromButton}
 				class="flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-leaf text-sm font-bold text-white transition-all duration-200 hover:bg-leaf-dark active:scale-95"
 				aria-label={`Add ${product.name} to cart`}
 			>

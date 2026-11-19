@@ -10,16 +10,30 @@
 	import Lenis from 'lenis';
 	import gsap from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
-	import { Phone, ShoppingCart } from '@lucide/svelte';
+	import { onNavigate } from '$app/navigation';
+	import BottomNav from '#lib/components/BottomNav.svelte';
 	import CartDrawer from '#lib/components/CartDrawer.svelte';
 	import Header from '#lib/components/Header.svelte';
 	import Footer from '#lib/components/Footer.svelte';
 	import WhatsAppIcon from '#lib/components/WhatsAppIcon.svelte';
-	import { cart } from '#lib/cart.svelte.ts';
 	import { drawer } from '#lib/drawer.svelte.ts';
 	import { site } from '#lib/data/site.ts';
 
 	let { children } = $props();
+
+	// View Transitions for page navigation — guarded: never under
+	// prefers-reduced-motion, and never on low-power devices.
+	onNavigate((navigation) => {
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		if (navigator.hardwareConcurrency <= 2) return;
+		if (!document.startViewTransition) return;
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
+	});
 
 	const jsonLd = {
 		'@context': 'https://schema.org',
@@ -141,34 +155,9 @@
 	<WhatsAppIcon size={26} />
 </a>
 
-<!-- Sticky mobile bottom bar: Call / WhatsApp / Cart -->
-<nav
-	aria-label="Quick actions"
-	class="fixed inset-x-0 bottom-0 z-40 grid grid-cols-3 border-t border-line bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden"
->
-	<a href={site.phoneHref} class="flex min-h-14 flex-col items-center justify-center gap-0.5 text-xs font-semibold text-ink">
-		<Phone size={20} class="text-leaf-dark" aria-hidden="true" />
-		Call
-	</a>
-	<a
-		href={site.whatsappHref}
-		target="_blank"
-		rel="noopener"
-		class="flex min-h-14 flex-col items-center justify-center gap-0.5 text-xs font-semibold text-ink"
-	>
-		<span class="text-[#25d366]"><WhatsAppIcon size={20} /></span>
-		WhatsApp
-	</a>
-	<button
-		type="button"
-		onclick={() => (drawer.open = true)}
-		class="flex min-h-14 flex-col items-center justify-center gap-0.5 bg-leaf text-sm font-bold text-white"
-	>
-		<ShoppingCart size={20} aria-hidden="true" />
-		Cart{#if cart.count > 0} ({cart.count}){/if}
-	</button>
-</nav>
-<!-- Spacer so the sticky bar never covers footer content on mobile -->
+<!-- Mobile bottom navigation: Home / Categories / Search / Cart / Account -->
+<BottomNav />
+<!-- Spacer so the bottom nav never covers footer content on mobile -->
 <div class="h-14 lg:hidden" aria-hidden="true"></div>
 
 <CartDrawer bind:open={drawer.open} />
