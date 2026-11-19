@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+@theme {
+	--font-display: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+	--font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+	--color-leaf: #22a447;
+	--color-leaf-dark: #157a33;
+	--color-leaf-deep: #0e5c26;
+	--color-leaf-soft: #e8f7ee;
+	--color-leaf-pale: #f2fbf5;
+	--color-lime: #a3e635;
+	--color-amber: #f59e0b;
+	--color-amber-soft: #fdf3e3;
+	--color-rose-soft: #fdeef3;
+	--color-cream: #fbfdfb;
+	--color-ink: #14261a;
+	--color-muted: #5c6f61;
+	--color-line: #e3ece5;
+
+	--ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	@apply bg-white font-sans text-ink antialiased;
+	font-size: 1rem;
+}
+
+::selection {
+	background: #22a447;
+	color: #fff;
+}
+
+/* One clear focus style everywhere (WCAG 2.2 AA, 3:1) */
+:focus-visible {
+	outline: 2px solid #157a33;
+	outline-offset: 3px;
+	border-radius: 2px;
+}
+
+/* Motion: transform + opacity only, 100–300ms, respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+.reveal {
+	opacity: 0;
+	transform: translateY(16px);
+	transition:
+		opacity 300ms var(--ease-out-expo),
+		transform 300ms var(--ease-out-expo);
+}
+.reveal.is-visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+	.reveal {
+		opacity: 1;
+		transform: none;
+		transition: none;
+	}
+}
+
+/* Thin scrollbar for horizontal carousels */
+.no-scrollbar {
+	scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+	display: none;
+}
+
+/* Gentle float for the hero image (transform only) */
+@keyframes float-y {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-7px);
+	}
+}
+.animate-float {
+	animation: float-y 4.5s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+	.animate-float {
+		animation: none;
+	}
+}
+
+/* Marquee strip (transform only, pauses on hover) */
+@keyframes marquee-x {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-50%);
+	}
+}
+.animate-marquee {
+	animation: marquee-x 28s linear infinite;
+}
+.marquee:hover .animate-marquee {
+	animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+	.animate-marquee {
+		animation: none;
+	}
+}
