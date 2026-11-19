@@ -5,7 +5,7 @@
 <svelte:head>
 	<title>Privacy Policy — GreenBasket</title>
 	<meta name="description" content="How GreenBasket collects, uses and protects your information when you order groceries or message us." />
-	<link rel="canonical" href="https://greenbasket.pages.dev/privacy" />
+	<link rel="canonical" href="https://greenbasket-4yz.pages.dev/privacy" />
 </svelte:head>
 
 <PageHero eyebrow="Your data" title="Privacy policy" sub="Mock policy for design review — replace with the store's real policy before launch." />

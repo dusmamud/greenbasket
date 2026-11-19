@@ -10,7 +10,7 @@
 		name="description"
 		content="Answers to the questions customers actually ask: delivery speed and areas, free delivery, payment methods, returns, scheduling and more."
 	/>
-	<link rel="canonical" href="https://greenbasket.pages.dev/faq" />
+	<link rel="canonical" href="https://greenbasket-4yz.pages.dev/faq" />
 </svelte:head>
 
 <PageHero

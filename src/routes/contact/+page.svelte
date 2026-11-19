@@ -33,7 +33,7 @@
 		name="description"
 		content="GreenBasket, Linking Road, Bandra West, Mumbai. Open 6 AM–11 PM, all days. Call +91 98765 43210 or WhatsApp us."
 	/>
-	<link rel="canonical" href="https://greenbasket.pages.dev/contact" />
+	<link rel="canonical" href="https://greenbasket-4yz.pages.dev/contact" />
 </svelte:head>
 
 <PageHero

@@ -5,7 +5,7 @@ export const site = {
 	tagline: 'Fresh To You',
 	description:
 		'GreenBasket — fresh groceries delivered fast. Farm-fresh fruits, vegetables, dairy and daily essentials at your door in as little as 30 minutes.',
-	url: 'https://greenbasket.pages.dev',
+	url: 'https://greenbasket-4yz.pages.dev',
 	phoneDisplay: '+91 98765 43210',
 	phoneHref: 'tel:+919876543210',
 	email: 'hello@greenbasket.in',

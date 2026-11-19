@@ -7,7 +7,7 @@
 <svelte:head>
 	<title>Shipping & Delivery — GreenBasket | 30-Minute Delivery, Easy Returns</title>
 	<meta name="description" content="GreenBasket delivery: 30–45 minutes across Mumbai, free over ₹499, scheduled slots, and no-questions-asked returns within 24 hours." />
-	<link rel="canonical" href="https://greenbasket.pages.dev/shipping" />
+	<link rel="canonical" href="https://greenbasket-4yz.pages.dev/shipping" />
 </svelte:head>
 
 <PageHero

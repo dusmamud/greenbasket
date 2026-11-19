@@ -17,7 +17,7 @@
 		name="description"
 		content="GreenBasket offers: up to 40% off vegetables, flat 20% off fruits every Friday, buy 1 get 1 free on snacks, ₹100 off your first order and free delivery over ₹499."
 	/>
-	<link rel="canonical" href="https://greenbasket.pages.dev/offers" />
+	<link rel="canonical" href="https://greenbasket-4yz.pages.dev/offers" />
 </svelte:head>
 
 <PageHero

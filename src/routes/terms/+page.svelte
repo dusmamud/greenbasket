@@ -5,7 +5,7 @@
 <svelte:head>
 	<title>Terms & Conditions — GreenBasket</title>
 	<meta name="description" content="Terms for ordering groceries at GreenBasket — prices, delivery, cancellations and refunds." />
-	<link rel="canonical" href="https://greenbasket.pages.dev/terms" />
+	<link rel="canonical" href="https://greenbasket-4yz.pages.dev/terms" />
 </svelte:head>
 
 <PageHero eyebrow="The fine print" title="Terms & conditions" sub="Mock terms for design review — replace with the store's real terms before launch." />

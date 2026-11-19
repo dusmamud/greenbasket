@@ -18,7 +18,7 @@
 		name="description"
 		content="GreenBasket started in Bandra West, Mumbai with one belief: fresh groceries should reach your door fast, fairly priced, and honestly packed."
 	/>
-	<link rel="canonical" href="https://greenbasket.pages.dev/about" />
+	<link rel="canonical" href="https://greenbasket-4yz.pages.dev/about" />
 </svelte:head>
 
 <PageHero

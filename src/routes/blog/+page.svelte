@@ -8,7 +8,7 @@
 <svelte:head>
 	<title>Blog — GreenBasket | Healthy Living, Made Simple</title>
 	<meta name="description" content="GreenBasket blog — superfoods, meal prep ideas, sustainability tips and healthy recipes for everyday Indian kitchens." />
-	<link rel="canonical" href="https://greenbasket.pages.dev/blog" />
+	<link rel="canonical" href="https://greenbasket-4yz.pages.dev/blog" />
 </svelte:head>
 
 <PageHero

@@ -37,7 +37,7 @@
 <svelte:head>
 	<title>Track My Order — GreenBasket</title>
 	<meta name="description" content="Track your GreenBasket grocery order — from packing to your door, live." />
-	<link rel="canonical" href="https://greenbasket.pages.dev/track-order" />
+	<link rel="canonical" href="https://greenbasket-4yz.pages.dev/track-order" />
 </svelte:head>
 
 <PageHero
