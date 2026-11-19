@@ -55,7 +55,7 @@
 				<button
 					type="submit"
 					aria-label="Search"
-					class="mr-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-leaf text-white transition-transform duration-200 hover:scale-105"
+					class="mr-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-leaf text-white transition-transform duration-200 hover:scale-105"
 				>
 					<Search size={17} aria-hidden="true" />
 				</button>
@@ -118,7 +118,7 @@
 			<button
 				type="submit"
 				aria-label="Search"
-				class="mr-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-leaf text-white"
+				class="mr-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-leaf text-white"
 			>
 				<Search size={17} aria-hidden="true" />
 			</button>

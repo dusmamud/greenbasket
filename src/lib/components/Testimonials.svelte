@@ -33,7 +33,7 @@
 				</h2>
 				<p class="mt-2 flex items-center gap-2 text-muted">
 					<Stars rating={4.8} size={18} showValue />
-					<span>4.8 · 2,400+ reviews</span>
+					<span>2,400+ reviews</span>
 				</p>
 			</div>
 			<div class="hidden gap-2 sm:flex">
